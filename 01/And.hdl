@@ -1,0 +1,23 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/And.hdl
+
+/**
+ * And gate: 
+ * out = 1 if (a == 1 and b == 1)
+ *       0 otherwise
+ *  在这里我们直接利用已经构建好的 Or 和 Not 门
+ */
+
+CHIP And {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+    Not(in=a, out=out1);
+    Not(in=b, out=out2);
+    Or(a=out1, b=out2, out=out3);
+    Not(in=out3, out=out);
+}
