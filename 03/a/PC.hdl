@@ -17,4 +17,10 @@ CHIP PC {
 
     PARTS:
     // Put your code here:
+    // 在一个多分支的选择之中，我们需要反向设置
+    Inc16(in=preOut, out=addOut);
+    Mux16(a=preOut, b=addOut, sel=inc, out=o1);
+    Mux16(a=o1, b=in, sel=load, out=o2);
+    Mux16(a=o2, b[0..15]=false, sel=reset, out=o3);
+    Register(in=o3, load=true, out=out, out=preOut);
 }
