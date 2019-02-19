@@ -12,3 +12,64 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+
+// 屏幕最大地址
+@24575
+D=A
+@R0
+M=D
+
+// 当前地址
+@SCREEN
+D=A
+@R1
+M=D
+
+(LOOP)
+@KBD
+D=M
+@FILL
+D;JGT
+
+@CLEAR
+0;JMP
+
+(FILL)
+// 判断屏幕是否为满
+    @0
+    D = M
+    @1
+    D = D - M
+    @LOOP
+    D;JEQ
+
+@R1
+D=M
+A=M
+M=-1
+
+@R1
+M=D+1
+
+@FILL
+0;JMP
+
+(CLEAR)
+@R1
+D=M
+@SCREEN
+D=D-A
+@LOOP
+D;JLE
+
+
+@R1
+D=M
+A=M
+M=0
+
+@R1
+M=D-1
+
+@CLEAR
+0;JMP
