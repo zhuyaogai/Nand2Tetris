@@ -7,6 +7,8 @@ My own code for Nand2Tetris
     利用Project 01构建好的logic Gates 来构建基本的运算单元 Half Adder, Full Adder, Inc, ALU 
 - [x] Project 03 
     利用基本基于时钟的时序芯片 DFF (触发器)来构建更多基于时序的芯片(结合先前制作的组合逻辑芯片)，如 Bit, Register, RAMn, PC
+- [x] Project 04 
+    学习汇编语言理论，根据给Hack computer 设计的machine language写一些汇编语言程序
 
 
 --- 
