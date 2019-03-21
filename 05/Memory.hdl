@@ -28,4 +28,20 @@ CHIP Memory {
 
     PARTS:
     // Put your code here:
+
+    // 根据最左两位选出到底是操控那一块RAM区域，操控的话主要在于 load bit
+    // 00 ---> RAM
+    // 01 ---> RAM
+    // 10 ---> Screen
+    // 11 ---> Keyboard
+    DMux4Way(in=load, sel=address[13..14], a=RAMa, b=RAMb, c=screen, d=keyboard);
+
+    // 如果是操控RAM的话，使用的是前面的13个bits
+    Or(a=RAMa, b=RAMb, out=flag);
+    RAM16K(in=in, load=flag, address=address[0..13], out=o1);         // 16K
+    Screen(in=in, load=screen, address=address[0..12], out=o2);   // 8K
+    Keyboard(out=o3);
+
+    // 只需要考虑芯片的组合
+    Mux4Way16(a=o1, b=o1, c=o2, d=o3, sel=address[13..14], out=out);
 }

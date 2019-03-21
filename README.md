@@ -57,6 +57,9 @@ Hack Machine 的机器语言支持两种指令
 - 16-bit A-instructions    @value  --> 改变A register 和 M register
 - 16-bit C-instructions
 
+One to address the memory and one to operate 
+the selected memory register.
+
 Hack Program = Sequence of instructions written in the Hack machine language.
 
 Hack Registers
@@ -78,3 +81,20 @@ Technical tips
 - Start with pseudo code 
 
 make your program good-looking and easy to read.
+
+RISC    (MIPS)
+- more instructions
+- quicker execution 
+- fewer instruciotn type
+
+Easier to make hardware but harder to make software.
+
+CISC     (x86)
+- fewer instruction 
+- slower execution 
+- more instruction types
+
+Harder to make hardware but easier to make software.
+
+Hack belongs to RISC. 
+

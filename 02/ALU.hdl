@@ -62,5 +62,5 @@ CHIP ALU {
    Or8Way(in=o2, out=o4);
    Or(a=o3, b=o4, out=o5);
    Not(in=o5, out=zr);
-   Or(a = c, b = false, out = ng);
+   Or(a = c, b = false, out = ng);      // 主要看最左那一位是否为1
 }

@@ -9,7 +9,7 @@
  * The CPU is designed to fetch and execute instructions written in 
  * the Hack machine language. In particular, functions as follows:
  * Executes the inputted instruction according to the Hack machine 
- * language specification. The D and A in the language specification
+ * language specification. The D and A in the language specification   // 根据指令输入规范 D 寄存器和 A 寄存器
  * refer to CPU-resident registers, while M refers to the external
  * memory location addressed by A, i.e. to Memory[A]. The inM input 
  * holds the value of this location. If the current instruction needs 
@@ -40,4 +40,50 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+
+    // 明确一步的是组合逻辑电路是瞬间完成结果的，而时序逻辑电路需要等待下一个时间周期
+    // 解码输入指令  
+
+    Not(in=instruction[15], out=isA);
+    Not(in=isA, out=isC);
+
+    And(a=isC, b=instruction[5], out=isLoadAluOut);
+    Mux16(a=instruction, b=outAlu, sel=isLoadAluOut, out=inAR);
+
+    Or(a=isA, b=instruction[5], out=isLoadAR);
+    ARegister(in=inAR, load=isLoadAR, out=outAR, out[0..14]=addressM);
+
+    Mux16(a=outAR, b=inM, sel=instruction[12], out=outAM);
+
+    And(a=isC, b=instruction[4], out=isLoadD);
+    DRegister(in=outAlu, load=isLoadD, out=outDR);
+
+    And(a=isC, b=instruction[3], out=writeM);
+
+    And(a=isC, b=instruction[6], out=no);
+    And(a=isC, b=instruction[7], out=f);
+    And(a=isC, b=instruction[8], out=ny);
+    And(a=isC, b=instruction[9], out=zy);
+    And(a=isC, b=instruction[10], out=nx);
+    And(a=isC, b=instruction[11], out=zx);
+
+    ALU(x=outDR, y=outAM, zx=zx, nx=nx, zy=zy, ny=ny, f=f, no=no, out=outAlu, out=outM,  zr=zr, ng=ng);
+
+    // 找出大于0的标志位
+    Or(a=zr, b=ng, out=o);
+    Not(in=o, out=isOutGt);
+
+    // 还是需要在该指令是   C-指令的前提才成立
+    And(a=instruction[0], b=isC, out=a);
+    And(a=instruction[1], b=isC, out=b);
+    And(a=instruction[2], b=isC, out=c);
+
+    And(a=c, b=ng, out=isNG);
+    And(a=b, b=zr, out=isZR);
+    And(a=a, b=isOutGt, out=isGT);
+
+    Or(a=isNG, b=isZR, out=o1);
+    Or(a=o1, b=isGT, out=load);
+
+    PC(in=outAR, load=load, inc=true, reset=reset, out[0..14]=pc);
 }
