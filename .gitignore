@@ -2,3 +2,8 @@
 06/assembler/.idea/
 06/assembler/out
 06/assembler/assembler.iml
+
+07/vm-translator/.idea/*
+07/vm-translator/.idea/
+07/vm-translator/out
+07/vm-translator/vm-translator.iml

@@ -98,3 +98,31 @@ Harder to make hardware but easier to make software.
 
 Hack belongs to RISC. 
 
+
+#### 第七章   虚拟机1：堆栈运算
+虚拟机的基本思想：中间代码运行在虚拟机上(Virtual Mechine)，而不是真实的硬件平台上。
+
+>高级语言程序能够在目标计算机运行之前,它必须被翻译成计算机的机器语言。这个翻译工作——也就是编译(compilation)——是相当复杂的过程。通常必须为给定的高级程序和其对应的机器语言编写专门的编译器。每种编译器编译的高级语言与变异之后的机器语言之间存在很强的依赖性。减少这种依赖性的方法之一是，将整个编译过程划分为两个几乎独立的阶段。在第一阶段，高级程序被解析出来，其命令被翻译成一种中间处理结果——既不是高级也不是低级的中间结果。在第二阶段，这些中间结果被进一步翻译成目标硬件的机器语言。
+
+其实所谓的中间结果实则是一个虚拟机模型，在本章就是一个堆栈模型。
+
+这里的VM语言包括四种类型命令：
+- 算术命令
+- 内存访问命令
+- 程序流程控制命令
+- 子程序调用命令
+
+使用方法如下：
+利用自己写的VM翻译器将Xxx.vm文件翻译成Xxx.asm,然后将Xxx.asm放进对应目录文件夹内,启动CPU模拟器加载Xxx.asm,然后再load对应的测试脚本,如果测试脚本能够成功通过即可.
+
+
+#### History of VMs and two-tier compilation:
+- p-code
+- Sun
+- Cellphones
+#### How close is our VM to Java’s JVM?
+#### Efficiency and optimization
+#### Different VM implementations:
+- Stack machine
+- Register machine
+- Other approaches.
