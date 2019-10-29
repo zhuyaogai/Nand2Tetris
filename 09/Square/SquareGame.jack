@@ -55,7 +55,7 @@ class SquareGame {
          // waits for a key to be pressed
          while (key = 0) {
             let key = Keyboard.keyPressed();
-            do moveSquare();
+            //do moveSquare();
          }
          if (key = 81)  { let exit = true; }     // q key
          if (key = 90)  { do square.decSize(); } // z key
@@ -68,7 +68,9 @@ class SquareGame {
          // waits for the key to be released
          while (~(key = 0)) {
             let key = Keyboard.keyPressed();
-            do moveSquare();
+            if (~((key = 90) | (key = 88) | (key = 0))) {
+               do moveSquare();
+            }
          }
      } // while
      return;

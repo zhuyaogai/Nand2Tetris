@@ -42,5 +42,15 @@ class List {
     }
 
     // More list processing methods can come here.
+    method void reversePrint() {
+        var List current;    // initializes current to the first item
+        let current = this;  // of this list
+        if (~(next = null)) {
+            do next.reversePrint();
+        }
 
+        do Output.printInt(current.getData());
+        do Output.printChar(32); // prints a space
+        return;
+    }
 }

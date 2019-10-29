@@ -115,6 +115,7 @@ Hack belongs to RISC.
 使用方法如下：
 利用自己写的VM翻译器将Xxx.vm文件翻译成Xxx.asm,然后将Xxx.asm放进对应目录文件夹内,启动CPU模拟器加载Xxx.asm,然后再load对应的测试脚本,如果测试脚本能够成功通过即可.
 
+其实在实现算术运算的 eq/gt/lt 等运算符的时候是比较巧妙的，因为我们的目的是利用栈顶的两个元素进行 eq/gt/lt 等运算之后再将结果值(true/false)写回栈顶。所以在这里我们就需要一个判断并且进行跳转来写栈顶的值。true置栈顶值为-1，false置栈顶值为0.
 
 #### History of VMs and two-tier compilation:
 - p-code
@@ -126,3 +127,25 @@ Hack belongs to RISC.
 - Stack machine
 - Register machine
 - Other approaches.
+
+
+#### 第八章  虚拟机2：程序控制
+##### Branching commands
+- goto *label*
+- if-goto *label*
+- label *label*
+
+
+##### Function commands
+- function *functionName nVars*      //n个局部(Local)变量
+- call *functionName nArgs*         // n个参数
+- return 
+
+- function *functionName nVars* 函数定义后面接n条push 操作作为局部变量
+- call *functionName nArgs* 之前会有n次push操作，把参数压栈
+
+### 在最底层里面，Hack只有两种指令
+- A 指令
+- C 指令
+
+我们可以将汇编形式的A指令和C指令翻译成对应的01指令，只是具备一一对应的。对于VM语言，我们抽象出基于堆栈的虚拟机模型，利用最底层的汇编指令去模拟出这么一个模型，并且可以让它工作得十分好。在这个模型中，我们希望所有的操作都能够是抽象地从这个出发思考的操作，从而屏蔽掉底层的汇编操作，所以我们需要一个vm翻译器，能够将每一条基于堆栈模型的指令翻译成底层的汇编指令，那么这整个工作就能够被完成了。我们就可以说我们实现了一个基于堆栈的虚拟机了，在这个虚拟机上了运行基于该vm模型写的指令代码，其实这个虚拟机也就是一个翻译器而已。

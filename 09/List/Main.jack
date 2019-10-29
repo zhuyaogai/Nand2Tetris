@@ -11,7 +11,9 @@ class Main {
       let v = List.new(5,null);
       let v = List.new(2,List.new(3,v));
       do v.print();        // prints 2 3 5 
-      do v.dispose();      // disposes the list
+      do Output.println();      // New line
+      do v.reversePrint();        // prints 2 3 5
+
       return;
    }
 }

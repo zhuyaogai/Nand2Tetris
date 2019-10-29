@@ -1,0 +1,29 @@
+
+class CountdownTimer {
+    field int second;
+
+    constructor CountdownTimer new(int s) {
+        let second = s;
+        return this;
+    }
+
+    method void countdown() {
+        while (second > 0) {
+            do Screen.clearScreen();
+            do Output.moveCursor(10, 25);
+            do Output.printInt(second);
+            let second = second - 1;
+            do Sys.wait(1000);
+        }
+
+        do Screen.clearScreen();
+        do Output.moveCursor(10, 25);
+        do Output.printString("Time is up!");
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

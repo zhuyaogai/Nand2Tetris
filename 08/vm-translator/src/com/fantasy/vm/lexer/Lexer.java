@@ -1,9 +1,7 @@
 package com.fantasy.vm.lexer;
 
-import com.fantasy.vm.cmd.C_ARITHMETIC;
-import com.fantasy.vm.cmd.C_POP;
-import com.fantasy.vm.cmd.C_PUSH;
-import com.fantasy.vm.cmd.Command;
+import com.fantasy.vm.cmd.*;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class Lexer {
 
         // 内存访问命令
         memoryAccessCommands = new ArrayList<>();
-        memoryAccessCommands.addAll(Arrays.asList("push", "pop", "call", "ret"));
+        memoryAccessCommands.addAll(Arrays.asList("push", "pop", "call", "ret", "label", "if-goto", "goto"));
     }
 
     public Command nextCommand() {
@@ -49,12 +47,24 @@ public class Lexer {
                 return new C_ARITHMETIC(nextLine);
             } else {
                 // 接下来就是 内存访问命令  push pop call ret 等命令
-                String[] strs = nextLine.split(" ");
+                String[] strs = nextLine.split("\\s+");
                 switch (strs[0]) {
                     case "push":
                         return new C_PUSH(strs[1], Integer.parseInt(strs[2]));
                     case "pop":
                         return new C_POP(strs[1], Integer.parseInt(strs[2]));
+                    case "label":
+                        return new C_LABEL(strs[1]);
+                    case "goto":
+                        return new C_GOTO(strs[1]);
+                    case "if-goto":
+                        return new C_IF(strs[1]);
+                    case "call":
+                        return new C_CALL(strs[1], Integer.parseInt(strs[2]));
+                    case "function":
+                        return new C_FUNCTION(strs[1], Integer.parseInt(strs[2]));
+                    case "return":
+                        return new C_RETURN();
                 }
             }
         }
